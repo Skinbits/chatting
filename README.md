@@ -1,4 +1,4 @@
 chatting
 ========
 
-A begging for a go chat server.
+A begging for a chat server made in Go.
