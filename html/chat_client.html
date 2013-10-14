@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+	<head>
+
+		<meta charse="utf-8"/>
+
+		<title> Welcome to Tripwell chat </title>
+
+		<style type="text/css">
+		</style>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript">
+		$(function() {
+			$("#start_chat").click(function() {
+				$("#chat_client").html("<iframe frameborder=\"0\" width=\"640\" height=\"480\" src=\"/client_frame.html?name=" + $("#client_name").val()+ "\"></iframe>")
+			});
+		})
+		</script>
+	</head>
+	<body>
+		<div id="client">
+		  <label for="client_name">Name: </label><input type="text" name="client_name" id="client_name"/><br/>
+			<button id="start_chat" type="button" name="start_chat">Talk with costumer support</button>
+			<div id="chat_client"></div>
+		</div>
+	</body>
+</html>

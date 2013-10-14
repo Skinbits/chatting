@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<title>TripWell Chat Client</title>
+<style type="text/css">
+	body {
+		font-family: Verdana;
+		font-size: 12px;
+		padding: 0px;
+		margin: 0px;
+	}
+	#conversation {
+		width: 630px;
+		height: 400px;
+	}
+	#message {
+		width: 550px;
+	}
+	#send {
+		width: 75px;
+	}
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+	var chat = {
+		sock: null,
+		init: function() {
+			try {
+				this.sock = new WebSocket("ws://{{.Host}}:{{.Port}}/ws?name={{.Name}}");
+				this.sock.onopen = function() {
+					$("#conversation").append("Connection open!!\n");
+				}
+				this.sock.onclose = function() {
+					$("#conversation").append("Connection closed.\n");
+				}
+				this.sock.onmessage = function(msg) {
+					$("#conversation").append(msg.data);
+					$("#conversation").append("\n");
+				}				
+			} catch (exception) {
+				$("#conversation").append("Error: "+exception);
+			}
+			$("#send").click(function() {
+				var text = $("#message").val();
+				$("#conversation").append("me: "+text+"\n")
+				try {
+					chat.sock.send(text+"\n");
+				} catch (exception) {
+					$("#conversation").append("Error: "+exception);
+				}
+				$("#message").val("");
+			});
+		}
+	}
+	$(function() {
+		chat.init();
+	})
+</script>
+</head>
+<body>
+<textarea id="conversation" disabled="disabled">
+	
+</textarea>
+<input type="text" id="message" name="message" value="">
+<button type="button" id="send" name="send">Send</button>
+</body>
+</html>
